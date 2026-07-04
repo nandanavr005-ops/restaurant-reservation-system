@@ -30,49 +30,57 @@ function MyReservations() {
   };
 
   return (
-    <div style={{ padding: "30px" }}>
+   <div className="container mt-5">
       <h1>My Reservations</h1>
 
       {reservations.length === 0 ? (
         <p>No Reservations Found</p>
       ) : (
         reservations.map((reservation) => (
-          <div
-            key={reservation._id}
-            style={{
-              border: "1px solid gray",
-              margin: "20px 0",
-              padding: "20px",
-              borderRadius: "10px",
-            }}
-          >
-            <h2>{reservation.restaurant.name}</h2>
+          <div className="card shadow mb-4" key={reservation._id}>
+  <div className="card-body">
 
-            <p>
-              <strong>Date:</strong>{" "}
-              {new Date(reservation.date).toLocaleDateString()}
-            </p>
+    <h4 className="card-title">
+      🍽 {reservation.restaurant.name}
+    </h4>
 
-            <p>
-              <strong>Time:</strong> {reservation.time}
-            </p>
+    <p>
+      <strong>📅 Date:</strong>{" "}
+      {new Date(reservation.date).toLocaleDateString()}
+    </p>
 
-            <p>
-              <strong>Guests:</strong> {reservation.guests}
-            </p>
+    <p>
+      <strong>🕒 Time:</strong> {reservation.time}
+    </p>
 
-            <p>
-              <strong>Status:</strong> {reservation.status}
-            </p>
+    <p>
+      <strong>👥 Guests:</strong> {reservation.guests}
+    </p>
 
-            {reservation.status !== "Cancelled" && (
-              <button
-                onClick={() => cancelReservation(reservation._id)}
-              >
-                Cancel Reservation
-              </button>
-            )}
-          </div>
+    <p>
+      <strong>Status:</strong>{" "}
+      <span
+        className={`badge ${
+          reservation.status === "Cancelled"
+            ? "bg-danger"
+            : "bg-success"
+        }`}
+      >
+        {reservation.status}
+      </span>
+    </p>
+
+    {reservation.status !== "Cancelled" && (
+      <button
+        className="btn btn-danger"
+        onClick={() => cancelReservation(reservation._id)}
+      >
+        Cancel Reservation
+      </button>
+    )}
+
+  </div>
+</div>
         ))
       )}
     </div>

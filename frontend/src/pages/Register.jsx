@@ -31,45 +31,74 @@ function Register() {
   };
 
   return (
-    <div style={{ padding: "30px" }}>
-      <h1>Register</h1>
+  <div className="container mt-5">
 
-      <form onSubmit={handleRegister}>
+    <div className="row justify-content-center">
 
-        <input
-          type="text"
-          placeholder="Enter Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
+      <div className="col-md-5">
 
-        <br /><br />
+        <div className="card shadow">
 
-        <input
-          type="email"
-          placeholder="Enter Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+          <div className="card-body">
 
-        <br /><br />
+            <h2 className="text-center mb-4">
+              📝 Register
+            </h2>
 
-        <input
-          type="password"
-          placeholder="Enter Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+            <form onSubmit={handleRegister}>
 
-        <br /><br />
+              <div className="mb-3">
+                <label>Name</label>
 
-        <button type="submit">
-          Register
-        </button>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={name}
+                  onChange={(e)=>setName(e.target.value)}
+                />
+              </div>
 
-      </form>
+              <div className="mb-3">
+                <label>Email</label>
+
+                <input
+                  type="email"
+                  className="form-control"
+                  value={email}
+                  onChange={(e)=>setEmail(e.target.value)}
+                />
+              </div>
+
+              <div className="mb-3">
+                <label>Password</label>
+
+                <input
+                  type="password"
+                  className="form-control"
+                  value={password}
+                  onChange={(e)=>setPassword(e.target.value)}
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="btn btn-success w-100"
+              >
+                Register
+              </button>
+
+            </form>
+
+          </div>
+
+        </div>
+
+      </div>
+
     </div>
-  );
+
+  </div>
+);
 }
 
 export default Register;

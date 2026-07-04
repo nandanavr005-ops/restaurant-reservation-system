@@ -3,6 +3,18 @@ const Reservation = require("../models/Reservation");
 // Book a Reservation
 const createReservation = async (req, res) => {
   try {
+    // Check if a reservation already exists for the same restaurant, date and time
+const existingReservation = await Reservation.findOne({
+  restaurant: req.body.restaurant,
+  date: req.body.date,
+  time: req.body.time,
+});
+
+if (existingReservation) {
+  return res.status(400).json({
+    message: "This time slot is already booked. Please choose another time.",
+  });
+}
     const reservation = await Reservation.create({
       ...req.body,
       user: req.user.id,

@@ -16,99 +16,172 @@ function AdminDashboard() {
   }, []);
 
   const fetchRestaurants = async () => {
-    const res = await API.get("/restaurants");
-    setRestaurants(res.data);
+    try {
+      const res = await API.get("/restaurants");
+      setRestaurants(res.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const fetchReservations = async () => {
-    const res = await API.get("/reservations");
-    setReservations(res.data);
+    try {
+      const res = await API.get("/reservations");
+      setReservations(res.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const addRestaurant = async (e) => {
     e.preventDefault();
 
-    await API.post("/restaurants", {
-      name,
-      location,
-      cuisine,
-      description,
-    });
+    try {
+      await API.post("/restaurants", {
+        name,
+        location,
+        cuisine,
+        description,
+      });
 
-    alert("Restaurant Added!");
+      alert("✅ Restaurant Added Successfully!");
 
-    setName("");
-    setLocation("");
-    setCuisine("");
-    setDescription("");
+      setName("");
+      setLocation("");
+      setCuisine("");
+      setDescription("");
 
-    fetchRestaurants();
+      fetchRestaurants();
+    } catch (error) {
+      alert("Unable to add restaurant");
+    }
   };
 
   return (
-    <div style={{ padding: "30px" }}>
-      <h1>Admin Dashboard</h1>
+    <div className="container mt-5">
+      <h1 className="text-center mb-4">👨‍💼 Admin Dashboard</h1>
 
-      <h2>Add Restaurant</h2>
+      {/* Add Restaurant */}
+      <div className="card shadow mb-5">
+        <div className="card-body">
+          <h3 className="mb-4">➕ Add Restaurant</h3>
 
-      <form onSubmit={addRestaurant}>
-        <input
-          placeholder="Restaurant Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
+          <form onSubmit={addRestaurant}>
+            <div className="mb-3">
+              <input
+                className="form-control"
+                placeholder="Restaurant Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </div>
 
-        <br /><br />
+            <div className="mb-3">
+              <input
+                className="form-control"
+                placeholder="Location"
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+              />
+            </div>
 
-        <input
-          placeholder="Location"
-          value={location}
-          onChange={(e) => setLocation(e.target.value)}
-        />
+            <div className="mb-3">
+              <input
+                className="form-control"
+                placeholder="Cuisine"
+                value={cuisine}
+                onChange={(e) => setCuisine(e.target.value)}
+              />
+            </div>
 
-        <br /><br />
+            <div className="mb-3">
+              <textarea
+                className="form-control"
+                rows="3"
+                placeholder="Description"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+              />
+            </div>
 
-        <input
-          placeholder="Cuisine"
-          value={cuisine}
-          onChange={(e) => setCuisine(e.target.value)}
-        />
-
-        <br /><br />
-
-        <textarea
-          placeholder="Description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
-
-        <br /><br />
-
-        <button type="submit">
-          Add Restaurant
-        </button>
-      </form>
-
-      <hr />
-
-      <h2>Restaurants</h2>
-
-      {restaurants.map((restaurant) => (
-        <div key={restaurant._id}>
-          🍽 {restaurant.name}
+            <button className="btn btn-success w-100" type="submit">
+              Add Restaurant
+            </button>
+          </form>
         </div>
-      ))}
+      </div>
 
-      <hr />
+      {/* Restaurants */}
+      <h2 className="mb-3">🍽 Restaurants</h2>
 
-      <h2>Reservations</h2>
+      <div className="row">
+        {restaurants.map((restaurant) => (
+          <div className="col-md-4 mb-4" key={restaurant._id}>
+            <div className="card shadow h-100">
+              <div className="card-body">
+                <h5>{restaurant.name}</h5>
 
-      {reservations.map((reservation) => (
-        <div key={reservation._id}>
-          🍽 {reservation.restaurant.name} —
-          👤 {reservation.user.name}
+                <p>
+                  <strong>📍</strong> {restaurant.location}
+                </p>
+
+                <p>
+                  <strong>🍛</strong> {restaurant.cuisine}
+                </p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <hr className="my-5" />
+
+      {/* Reservations */}
+      <h2 className="mb-3">📅 All Reservations</h2>
+
+      {reservations.length === 0 ? (
+        <div className="alert alert-info">
+          No reservations found.
         </div>
-      ))}
+      ) : (
+        <div className="table-responsive">
+          <table className="table table-striped table-bordered shadow">
+            <thead className="table-dark">
+              <tr>
+                <th>Restaurant</th>
+                <th>User</th>
+                <th>Date</th>
+                <th>Guests</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {reservations.map((reservation) => (
+                <tr key={reservation._id}>
+                  <td>{reservation.restaurant.name}</td>
+                  <td>{reservation.user.name}</td>
+                  <td>
+                    {new Date(reservation.date).toLocaleDateString()}
+                  </td>
+                  <td>{reservation.guests}</td>
+                  <td>
+                    <span
+                      className={`badge ${
+                        reservation.status === "Cancelled"
+                          ? "bg-danger"
+                          : "bg-success"
+                      }`}
+                    >
+                      {reservation.status}
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 }

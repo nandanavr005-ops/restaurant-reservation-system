@@ -26,36 +26,63 @@ function Login() {
   };
 
   return (
-    <div style={{ padding: "30px" }}>
-      <h1>Login</h1>
+  <div className="container mt-5">
 
-      <form onSubmit={handleLogin}>
+    <div className="row justify-content-center">
 
-        <input
-          type="email"
-          placeholder="Enter Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+      <div className="col-md-5">
 
-        <br /><br />
+        <div className="card shadow">
 
-        <input
-          type="password"
-          placeholder="Enter Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+          <div className="card-body">
 
-        <br /><br />
+            <h2 className="text-center mb-4">
+              🔐 Login
+            </h2>
 
-        <button type="submit">
-          Login
-        </button>
+            <form onSubmit={handleLogin}>
 
-      </form>
+              <div className="mb-3">
+                <label>Email</label>
+
+                <input
+                  type="email"
+                  className="form-control"
+                  value={email}
+                  onChange={(e)=>setEmail(e.target.value)}
+                />
+              </div>
+
+              <div className="mb-3">
+                <label>Password</label>
+
+                <input
+                  type="password"
+                  className="form-control"
+                  value={password}
+                  onChange={(e)=>setPassword(e.target.value)}
+                />
+              </div>
+
+              <button
+                className="btn btn-primary w-100"
+                type="submit"
+              >
+                Login
+              </button>
+
+            </form>
+
+          </div>
+
+        </div>
+
+      </div>
+
     </div>
-  );
+
+  </div>
+);
 }
 
 export default Login;

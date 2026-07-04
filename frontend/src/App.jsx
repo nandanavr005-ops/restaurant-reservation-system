@@ -6,9 +6,12 @@ import Register from "./pages/Register";
 import Restaurants from "./pages/Restaurants";
 import MyReservations from "./pages/MyReservations";
 import AdminDashboard from "./pages/AdminDashboard";
+import Navbar from "./components/Navbar";
 
 function App() {
   return (
+    <>
+      <Navbar />
     <Routes>
       <Route path="/" element={<Home />} />
 
@@ -23,6 +26,7 @@ function App() {
       <Route path="/admin" element={<AdminDashboard />} />
       <Route path="/book/:id" element={<BookReservation />} />
     </Routes>
+     </>
   );
 }
 
