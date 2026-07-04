@@ -45,6 +45,13 @@ function Restaurants() {
             </p>
 
             <p>{restaurant.description}</p>
+            <button
+  onClick={() => {
+    window.location.href = `/book/${restaurant._id}`;
+  }}
+>
+  Book Now
+</button>
           </div>
         ))
       )}

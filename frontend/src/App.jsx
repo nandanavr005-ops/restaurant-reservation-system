@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-
+import BookReservation from "./pages/BookReservation";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -21,6 +21,7 @@ function App() {
       <Route path="/my-reservations" element={<MyReservations />} />
 
       <Route path="/admin" element={<AdminDashboard />} />
+      <Route path="/book/:id" element={<BookReservation />} />
     </Routes>
   );
 }
